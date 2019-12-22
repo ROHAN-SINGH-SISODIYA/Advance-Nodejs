@@ -1,0 +1,26 @@
+{
+  "apps": [
+    {
+      "name": "app-name",
+      "script": "./apps/<app-name>/server.js",
+      "cwd": "<absolute/relative path>/Advance-Node.js",
+      "instances": "max",
+      "exec_mode": "cluster",
+      "watch": true,
+      "max_memory_restart": "1500M",
+      "env": {
+        "NODE_CONFIG_DIR": "../../config/",
+        "APP_NAME": "<app-name>"
+      },
+      "out_file": "<absolute/relative path>/programs-data/logs/dexter_stdout.log",
+      "error_file": "<absolute/relative path>/programs-data/logs/dexter_stderr.log",
+      "merge_logs": true,
+      "log_date_format": "YYYY-MM-DD HH:mm Z",
+      "pid_file": "<absolute/relative path>/programs-data/locks/dexter-api.pid",
+      "min_uptime": "10s",
+      "kill_timeout": 120000,
+      "max_restarts": 10,
+      "cron_restart": "0 */1 * * *"
+    }
+  ]
+}

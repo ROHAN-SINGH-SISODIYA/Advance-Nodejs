@@ -1,0 +1,55 @@
+{
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": ["airbnb-base", "plugin:node/recommended"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "rules": {
+    "no-underscore-dangle": "off",
+    "consistent-return": "off",
+    "strict": "off",
+    "no-param-reassign": ["error", { "props": false }],
+    "max-len": [
+      "error",
+      {
+        "comments": 100,
+        "code": 100,
+        "ignoreTemplateLiterals": true,
+        "ignoreUrls": true
+      }
+    ],
+    "curly": ["error", "all"],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "never"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "env": {
+        "mocha": true
+      },
+      "files": ["apps/**/*.spec.js", "test/**/*.spec.js", "pe-modules/**/*.spec.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": "off",
+        "node/no-unpublished-require": "off",
+        "node/no-missing-require": "off",
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
+}
