@@ -1,2 +1,20 @@
-// app configurations
-// express config 
+const express = require('express');
+const bodyParser =require('body-parser');
+
+const app = express();
+
+// route/v1
+const userRoute=require('./routes/v1/user');
+
+// middlewares
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+//Routes
+app.use('/api/v1',userRoute);
+
+const PORT = 8000;
+
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+
