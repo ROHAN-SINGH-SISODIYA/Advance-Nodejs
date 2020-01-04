@@ -1,2 +1,2 @@
-// app initialization 
+// app initialization
 // app entry

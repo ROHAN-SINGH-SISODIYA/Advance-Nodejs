@@ -1,18 +1,21 @@
-const { check, validationResult } = require('express-validator');
+const _ = require('lodash');
+const Joi = require('joi');
 
-function regsiterValidate(req,res,next){
+function register(data) {
+  const userSchema = {
+    name: Joi.string().required(),
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+  };
 
-        check('name', 'Name is required').not().isEmpty(),
-        check('email', 'Please include a valid email').isEmail(),
-        check('password','Please enter a password with 6 or more characters').isLength({ min: 6 })
+  const validationResults = Joi.validate(data, userSchema, {
+    allowUnknown: false,
+    abortEarly: false,
+  });
 
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-          return res.status(400).json({ errors: errors.array() });
-        }
-        else{
-            next();
-        }
+  return (_.isEmpty(validationResults.error)) ? null : validationResults;
 }
 
-module.exports={validate}
+module.exports = {
+  register,
+};
