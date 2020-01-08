@@ -1,1 +1,14 @@
-dev.json
+{
+    "mongodb": {
+      "rohan": {
+        "database_name": "rohan",
+        "servers": [
+          {
+            "host": "",
+            "port": 27017
+          }
+        ],
+        "connect_timeout_ms": 10000
+      }
+    }
+  }

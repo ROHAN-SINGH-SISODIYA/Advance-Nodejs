@@ -16,6 +16,21 @@ function register(data) {
   return (_.isEmpty(validationResults.error)) ? null : validationResults;
 }
 
+function login(data) {
+  const userSchema = {
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+  };
+
+  const validationResults = Joi.validate(data, userSchema, {
+    allowUnknown: false,
+    abortEarly: false,
+  });
+
+  return (_.isEmpty(validationResults.error)) ? null : validationResults;
+}
+
 module.exports = {
   register,
+  login
 };

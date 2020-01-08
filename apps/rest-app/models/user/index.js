@@ -15,6 +15,18 @@ async function saveUser(data) {
   }
 }
 
+async function loginUser(data) {
+  const usePool = false;
+  try {
+     const userData=await userModel.loginUser(data, usePool);
+     console.log(userData);
+  } catch (error) {
+     console.error(error);
+     throw error;
+  }
+}
+
 module.exports = {
   saveUser,
+  loginUser
 };
