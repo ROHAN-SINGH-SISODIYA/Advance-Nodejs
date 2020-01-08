@@ -19,7 +19,7 @@ async function loginUser(data) {
   const usePool = false;
   try {
      const userData=await userModel.loginUser(data, usePool);
-     console.log(userData);
+     console.log("models data",userData);
   } catch (error) {
      console.error(error);
      throw error;
