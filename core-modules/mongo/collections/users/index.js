@@ -1,9 +1,9 @@
 const config = require('config');
-const jwt = require('jsonwebtoken'); // to generate signed token
 
 const { getConnectionSettings } = require('../../connection-helper');
 const mongooseHelper = require('../../');
 const schema = require('./schema');
+const customError = require('../../../common/custom-error');
 
 const dbConfig = config.get('mongodb.rohan');
 const COLLECTION_NAME = 'users';
@@ -38,44 +38,31 @@ async function saveUser(data, usePool) {
     await new Model(data).save();
   } catch (ex) {
     closeConnection(conn, usePool);
-    throw ex;
+    throw new customError.DatabaseError('failed to save user', ex);
   }
 
   closeConnection(conn, usePool);
 }
 
-async function loginUser(data,usePool,callback) {
+async function getUser(query, options, usePool) {
   let conn;
+  let user;
   try {
-     conn = await getDBConnection(usePool);
-     const Model = conn.model(COLLECTION_NAME, schema);
-     const {email,password}=data
-     console.log("user data",data);
-     await Model.findOne({ email }, (err,user) => {
-      if (err || !user) {
-          console.log(err); 
-          return callback({status:400,error:'User with that email does not exist. Please signup'});
-      }
-      if (!user.authenticate(password)) {
-          return callback({status:401,error:'Email and password dont match'});
-      }
-      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
-      console.log("user",user);
-      console.log("token",token);
-      //callback.cookie('t', token, { expire: new Date() + 9999 });
-
-      const { _id, name, email} = user;
-      //i want to return token and user info using callback to model
-      return callback({token, user:{ _id,name,email}});
-  });
-
-  }catch (ex) {
-      closeConnection(conn, usePool);
-      throw ex;
+    conn = await getDBConnection(usePool);
+    const Model = conn.model(COLLECTION_NAME, schema);
+    user = await Model.findOne(query)
+      .select(options.projection)
+      .lean()
+      .exec();
+  } catch (ex) {
+    closeConnection(conn, usePool);
+    throw new customError.DatabaseError('failed to get user', ex);
   }
   closeConnection(conn, usePool);
+  return user;
 }
 
 module.exports = {
-  saveUser,loginUser
+  getUser,
+  saveUser,
 };

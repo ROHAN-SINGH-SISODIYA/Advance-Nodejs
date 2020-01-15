@@ -32,5 +32,5 @@ function login(data) {
 
 module.exports = {
   register,
-  login
+  login,
 };

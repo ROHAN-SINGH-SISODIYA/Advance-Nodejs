@@ -4,7 +4,7 @@
       "database_name": "rohan",
       "servers": [
         {
-          "host": "",
+          "host": "localhost",
           "port": 27017
         }
       ],
