@@ -29,7 +29,7 @@
     "lodash": "^4.17.15",
     "mongoose": "5.8.2",
     "nodemon": "2.0.2",
-    "pm2": "4.2.1",
+    "pm2": "5.2.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
